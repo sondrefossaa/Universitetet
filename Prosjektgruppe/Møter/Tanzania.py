@@ -40,7 +40,7 @@ while running:
     pygame.draw.polygon(screen,pygame.Color(9,71,21),([0,0],[width*0.8,0], [0, height*0.8]))
     pygame.draw.polygon(screen,pygame.Color(0,67,87),([width-width*0.8,height],[width,height], [width,height- height*0.8]))
     
-    pygame.draw.polygon(screen,pygame.Color(98,82,5),([width*0.7, 0],[0,height*0.7], [width*0.7+10, 0], [0,height*0.7+10]))
+    pygame.draw.polygon(screen,pygame.Color(98,82,5),([width*0.7, 0], [width*0.7+10, 0],[0,height*0.7+10], [0,height*0.7]))
     
     #pygame.draw.polygon(screen,pygame.Color(98,82,5),([width-width*0.8,height],[width,height], [width,height- height*0.8]))
     
