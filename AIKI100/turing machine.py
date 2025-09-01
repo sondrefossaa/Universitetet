@@ -10,7 +10,6 @@ def q1(step):
         q1(step+1)
     elif input[step] == "1":
         input[step] = "1"
-        q1(step+1)        
-
+        q1(step+1)
 
 q1(0)
