@@ -8,8 +8,6 @@ def oppgave_2():
     alder = int(input("Oppgi alder: "))
     by_år= int(input("Hvor lenge had du bodd i tulleby? "))
 
-    text = ""
-    fra_ordfører = 0
     ordfører_kval ={
         "alder": 30,
         "by": 9
