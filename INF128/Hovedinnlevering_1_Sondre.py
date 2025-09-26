@@ -1,12 +1,13 @@
 #Oppgave 1
 #a
 def størstMinusMinst(tall1, tall2):
-    return max(tall1, tall2), min(tall1, tall2)
+    return max(tall1, tall2) - min(tall1, tall2)
 #b
 def temperaturForskjell(område1, område2):
-    temperatur1 = input(f"Temperatur {område1}: ")
-    temperatur2 = input(f"Temperatur {område2}: ")
+    temperatur1 = float(input(f"Temperatur {område1}: "))
+    temperatur2 = float(input(f"Temperatur {område2}: "))
     print(f"Temperaturforskjellen mellom {område1} og {område2} er {størstMinusMinst(temperatur1, temperatur2)} grader")
+
 #temperaturForskjell("London", "Paris")
 
 #c
@@ -14,14 +15,15 @@ def absoluttverdi(tall1):
     return abs(tall1)
 #Opggave 2
 #a
-def temperaturKonvertering(temperatur: float,måleenhet:str):
-    print((temperatur-32)*5/9 if måleenhet == "F" else (temperatur *9/5 +32))
-#temperaturKonvertering(20,"F")
+def temperaturKonvertering(temperatur: float,måleenhet:str = "C"): 
+    print(f"{((temperatur-32)*5/9 if måleenhet == "F" else (temperatur *9/5 +32)):.1f}")
+#temperaturKonvertering(93.2, "F")
+
+
 
 #Oppgave 3
 
-#a
-
+#abc
 class BankKonto:
     def __init__(self):
         self.saldo = 500
@@ -78,7 +80,6 @@ class BankKonto:
 def velg():
     konto = BankKonto()
     brukerInput = ""
-    #Få input
     while True:
         print(
         """
@@ -109,4 +110,4 @@ stopp - stopper programmet
             velg()
         konto.oppdater_rentesats()
 
-velg()
+#velg()
