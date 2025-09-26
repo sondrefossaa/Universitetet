@@ -19,6 +19,7 @@ def temperaturKonvertering(temperatur: float,måleenhet:str):
 #temperaturKonvertering(20,"F")
 
 #Oppgave 3
+
 #a
 
 class BankKonto:
@@ -66,6 +67,9 @@ class BankKonto:
         self.oppdater_siste_endringer(f"+{saldoEtter-saldoFør}")
         
     def vis_siste_endringer(self):
+        if len(self.endringer) == 0:
+            print("Ingen endringer enda.")
+            return
         for endring in self.endringer:
             print(endring)
         
@@ -75,7 +79,7 @@ def velg():
     konto = BankKonto()
     brukerInput = ""
     #Få input
-    while brukerInput != "stopp":
+    while True:
         print(
         """
 --------------------
@@ -98,8 +102,11 @@ stopp - stopper programmet
             konto.renteoppgjør()
         elif brukerInput == "5":
             konto.vis_siste_endringer()
+        elif brukerInput == "stopp":
+            return
         else:
             print("Input må være enten 1, 2, 3, 4 eller 5")
             velg()
         konto.oppdater_rentesats()
+
 velg()

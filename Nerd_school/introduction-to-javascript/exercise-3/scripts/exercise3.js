@@ -38,6 +38,8 @@
             else if (index === array.length-1) {return acc + ` and ` + curr}
             else {return acc + `, ` + curr}
         },``);
-        console.log(text)
+        const newElement = document.createElement("p")
+        newElement.innerHTML = text
+        document.body.appendChild(newElement)
     })(myInfo)
 })();   

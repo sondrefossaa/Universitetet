@@ -31,7 +31,7 @@ var person2 = {
 var janeDoe = {
     name: 'jane',
     contactInfo: {
-        email: 'jane@doe.com'
+        email: 'jane@doe.com',
         phone: '11223344'
     }
 };
