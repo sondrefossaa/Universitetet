@@ -74,8 +74,7 @@ class BankKonto:
             return
         for endring in self.endringer:
             print(endring)
-        
-        
+                
 
 def velg():
     konto = BankKonto()
