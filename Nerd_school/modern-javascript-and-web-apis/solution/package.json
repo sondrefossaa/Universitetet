@@ -1,0 +1,21 @@
+{
+  "name": "nerdschool-movies-app-example",
+  "version": "1.0.0",
+  "description": "Solution code for the 'Modern Javascript and Web APIs' Nerdschool workshop",
+  "type": "module",
+  "nodemonConfig": {
+    "ext": "js,html,css"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "reload": "^3.3.0"
+  }
+}
