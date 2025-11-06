@@ -1,0 +1,51 @@
+0,Uoppgitt krets
+1,Bergen sentrum
+2,Møhlenpris
+3,Nordnes
+4,Haukeland
+7,Ny-Krohnborg
+9,Bønes
+13,Landås
+14,Slettebakken
+15,Gimle
+18,Hellen
+19,Rothaugen
+22,Eidsvåg
+23,Tertnes
+24,Mjølkeråen
+25,Salhus
+28,Haukedalen
+29,Hordvik
+30,Haukås
+31,Nyborg
+32,Rolland
+35,Ytre Arna
+36,Indre Arna
+37,Garnes
+39,Lone
+40,Kringlebotn
+44,Kaland
+45,Kirkevoll
+48,Skjold
+49,Nesttun
+51,Hop
+52,Paradis
+54,Sandsli
+55,Rå
+56,Hjellestad
+57,Skeie
+58,Ytrebygda
+59,Søreide
+61,Lyshovden
+62,Lynghaug
+63,Ortun
+67,Olsvik
+68,Vadmyra
+69,Mathopen
+70,Alvøen
+71,Varden
+74,Damsgård
+76,Nygård
+77,Sædalen
+78,Flaktveit
+99,Forhåndsstemmer
