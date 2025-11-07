@@ -1,4 +1,4 @@
-#1
+#1 
 def telefonnummer(text: str):
     # Remove all non-digit characters first
     digits = ''.join(char for char in text if char.isdigit())

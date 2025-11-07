@@ -59,10 +59,11 @@ for parti in partier:
     valgresultat[parti.navn] = StemmeTall(parti.partikode, 100)
 # e
 def lesStemmer():
-    stemmer = []
+    global stemmer
+    temp_stemmer = []
     for navn, stemme in stemmer.items():
-        stemmer.append(f"Antall stemmer for {navn}: {stemme.stemmer}")
-    return stemmer
+        temp_stemmer.append(f"Antall stemmer for {navn}: {stemme.stemmer}")
+    return temp_stemmer
 
 
 def finnResultat(resultat, parti):
@@ -111,7 +112,6 @@ kretser = lesKretser()
 # b
 def kretsNr(navn : str):
     global kretser
-    
     for nummer, krets in kretser.items():
         if krets == navn:
             return nummer
@@ -175,16 +175,17 @@ def kretsResultat(valg, krets : str, parti : str):
             krets_objekt = krets_item
     if krets_objekt == None:
         return "ukjent krets"
+    
+    stemmesum = 0 
     for stemmetall in valg[krets_objekt[0]]:
         if stemmetall.partikode == parti_objekt.partikode:
-            return stemmetall.stemmer
+            stemmesum += stemmetall.stemmer
+    return stemmesum
 
 #oppgave 7
 def samlet(valg):
-
     samlet_fortegnelse = {}
     for krets in valg.values():
-
         for stemmetall in krets:
             partikode = stemmetall.partikode
             stemmer = stemmetall.stemmer
@@ -216,3 +217,55 @@ def kretsOversikt(valg):
 #kretsOversikt(valg21)
 
 # oppgave 10
+def partiOversikt(valg, parti_navn):
+    parti_kode = partiKode(parti_navn)
+    if parti_kode == "ukjent parti":
+        return f"Partiet '{parti_navn}' ikke funnet"
+    
+    total_parti_stemmer = samlet(valg).get(parti_kode, 0)
+    prosent = prosentFordeling(valg).get(parti_kode, 0)
+    
+    # Finn kretsfordeling med riktig initialisering
+    høyest_verdi = -1
+    lavest_verdi = float('inf')
+    høyest_kretser = []
+    lavest_kretser = []
+    
+    for krets_nr in valg.keys():
+        # Finn totale stemmer i denne kretsen
+        krets_total = sum(st.stemmer for st in valg[krets_nr])
+        if krets_total == 0:
+            continue
+            
+        # Finn partiets stemmer i denne kretsen
+        parti_stemmer_i_krets = 0
+        for stemme in valg[krets_nr]:
+            if stemme.partikode == parti_kode:
+                parti_stemmer_i_krets = stemme.stemmer
+                break
+        
+        # Beregn prosent i denne kretsen
+        krets_prosent = (parti_stemmer_i_krets / krets_total) * 100
+        
+        # Sjekk høyest/lavest
+        if krets_prosent > høyest_verdi:
+            høyest_verdi = krets_prosent
+            høyest_kretser = [krets_nr]
+        elif krets_prosent == høyest_verdi:
+            høyest_kretser.append(krets_nr)
+            
+        if krets_prosent < lavest_verdi:
+            lavest_verdi = krets_prosent
+            lavest_kretser = [krets_nr]
+        elif krets_prosent == lavest_verdi:
+            lavest_kretser.append(krets_nr)
+    
+    # Konverter kretsnumre til navn
+    høyest_navn = [kretser[nr] for nr in høyest_kretser]
+    lavest_navn = [kretser[nr] for nr in lavest_kretser]
+    
+    # Skriv resultat
+    print(f"{parti_navn} fikk {total_parti_stemmer} stemmer ({prosent}%)")
+    print(f"Høyest oppslutning ({høyest_verdi:.2f}%): {', '.join(høyest_navn)}")
+    print(f"Lavest oppslutning ({lavest_verdi:.2f}%): {', '.join(lavest_navn)}")
+
