@@ -2,28 +2,41 @@ from sys import stdin, maxsize
 import heapq
 
 
-def dijkstra(adj, src):
-    V = len(adj)
+# Work backwards from goal to get the latest time you can go
+
+
+def wait_time(t0, d, p):
+    if d < t0:
+        return maxsize
+    if p == 0:
+        return d - t0
+    return (p - ((d - t0) % p)) % p
+
+
+def dijkstra(adj_rev, src, target):
+    V = len(adj_rev)
     pq = []
-    dist = [maxsize] * V
-    dist[src] = 0
+    dist = [-maxsize] * V
+    dist[src] = s
     # push a tuple of distance to source and the node
-    heapq.heappush(pq, (0, src))
+    heapq.heappush(pq, (-dist[src], src))
 
     while pq:
-        d, u = heapq.heappop(pq)
-
-        if d > dist[u]:
+        neg_d, u = heapq.heappop(pq)
+        d = -neg_d
+        if d < dist[u]:
             continue
-        for v, w in adj[u]:
-            if dist[u] + w < dist[v]:
-                dist[v] = dist[u] + w
-                heapq.heappush(pq, (dist[v], v))
+        # if u == target:
+        #     return d <= s
+        for v, t0, p, d in adj_rev[u]:
+            new_d = d + wait_time(t0, d, p)
+            # print("New w: ", w)
+            if new_d > dist[v]:
+                dist[v] = new_d
+                heapq.heappush(pq, (-dist[v], v))
+    return dist[0]
 
-    return dist
 
-
-sptSet = set()
 n, m, s = map(int, stdin.readline().split())
 
 tramstops = []
@@ -32,15 +45,17 @@ for i in range(m):
     # u, v, t0, p = map(int, stdin.readline().split())
     tramstops.append(tuple(map(int, stdin.readline().split())))
 
-# Build adjacency
-adj = [[] for _ in range(m)]
-for i in range(m):
-    for j in range(m):
-        if tramstops[i][0] == tramstops[j][1]:
-            adj[i].append((j, tramstops[j][4]))
+# Build adj_revacency
+adj_rev = [[] for _ in range(n)]
+for u, v, t0, p, d in tramstops:
+    adj_rev[v].append((u, t0, p, d))
+# print("adj_revacent: ", adj_rev)
+# For each time the person can leave
+# the larges found seconds after 0 he can leave
+can_reach = dijkstra(adj_rev, n - 1, 0)
+print(can_reach if can_reach != -1 else "impossible")
 
-
-print(tramstops)
+# print(tramstops)
 
 
 # From each second from 0 to s-1, check if you can reach the last tram stop before s seconds
