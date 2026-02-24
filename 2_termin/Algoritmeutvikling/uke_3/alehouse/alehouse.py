@@ -1,19 +1,19 @@
 from sys import stdin
 
-n, seconds = map(int, stdin.readline().split())
-enters = []
-exits = []
-for _ in range(n):
-    enter, exit = map(int, stdin.readline().split())
-    enters.append(enter)
-    exits.append(exit)
-met = 0
-curr_met = 0
+n, k = map(int, stdin.readline().split())
+points = []
 
-for i in range(max(exits)):
-    curr_met = 0
-    for j in range(n):
-        if exits[j] >= i + seconds - enters[j] <= i:
-            curr_met += 1
-    met = max(curr_met, met)
-print(met)
+for _ in range(n):
+    a, b = map(int, stdin.readline().split())
+    points.append((a - k, 1))
+    points.append((b, -1))
+
+points.sort(key=lambda x: (x[0], -x[1]))
+
+max_friends = 0
+current = 0
+for _, delta in points:
+    current += delta
+    max_friends = max(max_friends, current)
+
+print(max_friends)

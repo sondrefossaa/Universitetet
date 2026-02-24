@@ -1,17 +1,19 @@
 from sys import stdin
 
-n, seconds = map(int, stdin.readline().split())
-people = []
-for _ in range(n):
-    enter, exit = map(int, stdin.readline().split())
-    people.append({"enters": enter, "exits": exit})
-sorted_people = sorted(people, key=lambda x: x["enters"])
+n, k = map(int, stdin.readline().split())
+points = []
 
-met = 0
-a = [person["enters"] for person in sorted_people]
-b = [person["exits"] for person in sorted_people]
-end = a[0]
-for i in range(n):
-    met = max(met, end - a[i])
-    end = max(end, b[i])
-print(met)
+for _ in range(n):
+    a, b = map(int, stdin.readline().split())
+    points.append((a - k, 1))
+    points.append((b, -1))
+
+points.sort(key=lambda x: (x[0], -x[1]))
+
+max_friends = 0
+current = 0
+for _, delta in points:
+    current += delta
+    max_friends = max(max_friends, current)
+
+print(max_friends)
