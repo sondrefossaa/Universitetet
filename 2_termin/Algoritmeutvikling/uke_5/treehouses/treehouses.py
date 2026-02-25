@@ -42,49 +42,42 @@ uf = UnionFind(n)
 for _ in range(n):
     treehouses.append(tuple(map(float, stdin.readline().split())))
 
+
+for i in range(1, e):
+    uf.union(0, i)
+
+
 # Get connections
+
 for i in range(p):
     x, y = map(int, stdin.readline().split())
-    uf.union(x, y)
+    uf.union(x - 1, y - 1)
 
-cables = set()
+edges = []
 
 
 def find_distance(t1, t2):
     x1, y1, x2, y2 = t1[0], t1[1], t2[0], t2[1]
     dist = sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-    # print("DIstance", dist)
     return dist
 
 
-# Dijkstra?
+for i in range(n):
+    for j in range(i + 1, n):
+        if uf.find(i) != uf.find(j):
+            x1, y1 = treehouses[i]
+            x2, y2 = treehouses[j]
+            edges.append((i, j, find_distance(treehouses[i], treehouses[j])))
 
+edges.sort(key=lambda x: x[2])
 
-# for i in range(e, len(uf.comp)):
-#     if uf.rank[i] == 0:
-#         min_distance = float("inf")
-#         closest = -1
-#         for treehouse in treehouses:
-#             if treehouse == treehouses[i]:
-#                 continue
-#             c_dist = find_distance(treehouse, treehouses[i])
-#             if c_dist < min_distance:
-#                 closest = treehouse
-#                 min_distance = c_dist
-#         uf.rank[treehouses.index(closest)] = 1
-#         cables.add((treehouses[i], closest))
-#
-# connected = [[] for _ in range(max(uf.comp))]
-#
-# for i in range(max(uf.comp)):
-#     for j in range(n):
-#         if uf.comp[j] == i:
-#             connected[i].append(j)
-#
-# print(connected)
+# Kruskal's algorithm
 
-# print(cables)
-dist = 0
-for cable in cables:
-    dist += find_distance(cable[0], cable[1])
-print(dist)
+total_len = 0.0
+
+for u, v, w in edges:
+    if uf.find(u) != uf.find(v):
+        uf.union(u, v)
+        total_len += w
+
+print(total_len)
