@@ -47,9 +47,10 @@ for u, v, t0, p, d in tramstops:
 # For each time the person can leave
 # the larges found seconds after 0 he can leave
 can_reach = -1
-for i in range(s):
+for i in range(s, -1, -1):
     if dijkstra(i, adj, 0, n - 1):
         can_reach = i
+        break
 print(can_reach if can_reach != -1 else "impossible")
 # print(tramstops)
 
