@@ -1,0 +1,5 @@
+1. Koble til hal9007 wifi
+2. ssh til dave@10.42.01
+3. passord: wings
+
+

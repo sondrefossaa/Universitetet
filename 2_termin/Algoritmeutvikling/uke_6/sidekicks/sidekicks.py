@@ -1,43 +1,35 @@
 from sys import stdin
 
 
-class SegmentTree:
+class FenwickTree:
     def __init__(self, size):
-        self.array = [0] * size
         self.n = size
-        self.ST = [0] * (4 * self.n)
+        self.array = [0] * size
+        self.bit = [0] * (size + 1)  # 1-indexed Fenwick tree
 
-    def update(self, node, L, R, idx, val):
-        if L == R:
-            self.array[idx] = val
-            self.ST[node] = val
-        else:
-            mid = (L + R) // 2
+    def _update(self, idx, delta):
+        i = idx + 1  # Convert to 1-indexed
+        while i <= self.n:
+            self.bit[i] += delta
+            i += i & -i
 
-            if L <= idx <= mid:
-                self.update(2 * node, L, mid, idx, val)
-            else:
-                self.update(2 * node + 1, mid + 1, R, idx, val)
-
-            self.ST[node] = self.ST[2 * node] + self.ST[2 * node + 1]
-
-    def query(self, node, tl, tr, l, r):
-        if r < tl or tr < l:
-            return 0
-
-        if l <= tl and tr <= r:
-            return self.ST[node]
-        tm = (tl + tr) // 2
-
-        return self.query(2 * node, tl, tm, l, r) + self.query(
-            2 * node + 1, tm + 1, tr, l, r
-        )
+    def _query(self, idx):
+        res = 0
+        i = idx + 1  # Convert to 1-indexed
+        while i > 0:
+            res += self.bit[i]
+            i -= i & -i
+        return res
 
     def set_value(self, idx, val):
-        self.update(1, 0, self.n - 1, idx, val)
+        delta = val - self.array[idx]
+        self.array[idx] = val
+        self._update(idx, delta)
 
     def sum(self, L, R):
-        return self.query(1, 0, self.n - 1, L, R)
+        if L == 0:
+            return self._query(R)
+        return self._query(R) - self._query(L - 1)
 
 
 n, q = map(int, stdin.readline().split())
@@ -46,7 +38,7 @@ gemvalues = list(map(int, stdin.readline().strip().split()))
 gemtypes = list(map(int, stdin.readline().strip()))
 # print(gemtypes, gemvalues)
 
-trees = [SegmentTree(n) for _ in range(6)]
+trees = [FenwickTree(n) for _ in range(6)]
 gem_pos = [[] for _ in range(6)]
 for i in range(n):
     gem_pos[gemtypes[i] - 1].append(i)
