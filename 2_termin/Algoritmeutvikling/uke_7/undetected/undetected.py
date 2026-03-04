@@ -39,20 +39,15 @@ class UnionFind:
         return f"{self.comp}, {self.rank}"
 
 
-def dist(p1, p2):
-    return abs((p1[0] - p2[0])) + abs((p1[1] - p2[1]))
-
-
-def inside_circle(pos, circle):
-    x, y = pos
-    cx, cy, r = circle
-    return dist((x, y), (cx, cy)) <= r
+# Dist squared is faster and avoids floation point presission issues
+def dist_sq(p1, p2):
+    return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
 
 
 def check_overlap(c1, c2):
     cx1, cy1, r1 = c1
     cx2, cy2, r2 = c2
-    return dist((cx1, cy1), (cx2, cy2)) <= r1 + r2
+    return dist_sq((cx1, cy1), (cx2, cy2)) <= (r1 + r2) ** 2
 
 
 k = int(input())
@@ -76,10 +71,10 @@ for i in range(k):
         if check_overlap(circle, circles[j]):
             uf.union(j, i)
     circles.append(circle)
-    print(uf.find(L_EDGE), uf.find(R_EDGE))
-    print(uf)
+    # print(uf.find(L_EDGE), uf.find(R_EDGE))
+    # print(uf)
     if uf.find(L_EDGE) == uf.find(R_EDGE):
         print(i)
         exit()
-# print(0)
-print(uf)
+print(0)
+# print(uf)
