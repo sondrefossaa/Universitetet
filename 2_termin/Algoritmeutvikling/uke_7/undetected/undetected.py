@@ -35,8 +35,8 @@ class UnionFind:
             self.comp[r1] = r2
             self.rank[r1] += 1
 
-    def print(self):
-        print(self.comp, self.rank)
+    def __str__(self):
+        return f"{self.comp}, {self.rank}"
 
 
 def dist(p1, p2):
@@ -55,31 +55,31 @@ def check_overlap(c1, c2):
     return dist((cx1, cy1), (cx2, cy2)) <= r1 + r2
 
 
-def overlaps_edge(c):
-    return (
-        c[0] - c[2] <= 0
-        or c[0] + c[2] >= field[0]
-        or c[1] - c[2] <= 0
-        or c[1] + c[2] >= field[1]
-    )
-
-
-def check_block(circles):
-    x, y = field
-
-
 k = int(input())
 
 circles = []
-uf = UnionFind(k * 2)
+uf = UnionFind(k + 2)
 # Add virtual edges in union find for the edges of the field
+L_EDGE = k
+R_EDGE = k + 1
 for i in range(k):
     circle = tuple(read_line_as_int())
 
     # If circkle overlaps edge, connect it to the virtual edge in union find
     # If it overlaps another circle, connect it to that circle in union find
     # If the left and right virtual edges are connected, then the field is blocked
-    for ci in circles:
-        if check_overlap(circle, ci):
-            uf.union(circles.index(ci), i)
+    if circle[0] - circle[2] <= 0:  # Left overlap
+        uf.union(i, L_EDGE)
+    if circle[0] + circle[2] >= field[0]:  # Right overlap
+        uf.union(i, R_EDGE)
+    for j in range(i):
+        if check_overlap(circle, circles[j]):
+            uf.union(j, i)
     circles.append(circle)
+    print(uf.find(L_EDGE), uf.find(R_EDGE))
+    print(uf)
+    if uf.find(L_EDGE) == uf.find(R_EDGE):
+        print(i)
+        exit()
+# print(0)
+print(uf)
