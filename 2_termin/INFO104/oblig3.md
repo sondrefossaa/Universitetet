@@ -1,8 +1,6 @@
-# Oblig 3
+# Oblig 3 - Sondre Fosså
 
 ## 1. Førsteordens logikk
-
----
 
 ### A
 
@@ -131,83 +129,35 @@
 
 ## 2 Grafer
 
-### a
+## a
 
-**Situasjonen:**  
-Vi har 8 tettsteder: Lillegrend (LIL) på Lilleøy, og Storøyhavn (STOR), Skipperhavn (SKIP), Solvik (SOLV) på Storøy. På fastlandet: Oddeneset (ODD), Dal (DAL), Yttervika (YTT), Berg (BERG).  
-To broer er allerede på plass:  
+Postbudet vil ha en hamilton syklus og Turistskjefen vil ha en eulercyclus
 
-- LIL–ODD  
-- STOR–LIL  
+**Postbudet**
+Kravet til Postbudet kan oppfylles av å ha en bro mellom berg og solvik
 
-Den tredje broen skal gå fra Storøy (altså fra STOR) til et sted på fastlandet.
+**Turistskjefen**
+En eulercyclus er valid når alle noder har partall antall kanter eller bare start
+og slutt noden har odde kanter.
+Dersom vi skal starte å slutte i samme node må alle nodene i grafen ha
+partall kanter og det har ikke lillegrend noden.
+Derfor kan ikke kravet til Turistskjefen oppfylles.
 
-**Grad av noder før tredje bro:**  
+### Svar på i og ii
 
-- LIL: forbindelser til ODD og STOR → grad 2  
-- STOR: vei til SKIP + bro til LIL → grad 2  
-- SKIP: vei til STOR + vei til SOLV → grad 2  
-- SOLV: vei til SKIP → grad 1  
-- ODD: bro til LIL + vei til DAL → grad 2  
-- DAL: vei til ODD + vei til YTT → grad 2  
-- YTT: vei til DAL + vei til BERG → grad 2  
-- BERG: vei til YTT → grad 1  
-
-To noder har odde grad: SOLV (1) og BERG (1).
-
----
-
-#### Krav 1: Postbudet – Hamilton-syklus
-
-En Hamilton-syklus krever at **alle noder har grad minst 2**.  
-SOLV har bare grad 1, og dette kan ikke endres fordi den tredje broen må gå fra STOR til fastlandet (ikke fra SOLV).  
-**Konklusjon:** Umulig å få Hamilton-syklus, uansett hvor tredje bro plasseres.
-
-#### Krav 2: Turistsjefen – Euler-krets
-
-En Euler-krets krever at **alle noder har like grader**.  
-Selv om vi velger tredje bro for å forsøke å gjøre SOLV og BERG like, vil STOR sin grad bli odde (fordi STOR får én ekstra forbindelse).  
-
-Eksempel: Bro STOR–BERG gir:  
-
-- STOR: 2 → 3 (odde)  
-- BERG: 1 → 2 (jevn)  
-- SOLV: 1 (fremdeles odde)  
-
-Da har vi to odde noder (STOR og SOLV) – mulig med Euler-sti, men ikke krets. For å få krets må alle være like, men det er umulig med bare én ny bro til fastlandet.  
-**Konklusjon:** Euler-krets umulig.
-
----
-
-**Svar på spørsmålene:**  
-(i) **Finnes løsning som oppfyller begges krav samtidig?**  
-Nei – Hamilton-syklus er umulig uansett.
-
-(ii) **Finnes løsning som oppfyller kravene hver for seg?**  
-Nei – Hamilton-syklus er umulig (pga. SOLVs grad 1). Euler-krets er umulig (kan ikke få alle like).
-
----
+Det finnes bare en løsning som oppfyller kravet til Postbudet.
 
 ### b
 
 **Graf (i):**  
 
-- Kun to broer: LIL–ODD og STOR–LIL  
-- Ingen bro mellom Storøy og fastlandet utover disse  
-- Opprinnelige veier:  
-  - Storøy: STOR–SKIP–SOLV  
-  - Fastland: ODD–DAL–YTT–BERG  
-  - Antatt: ingen vei YTT–STOR  
-
 Gradfølge (i):  
 LIL(2), STOR(2), SKIP(2), SOLV(1), ODD(2), DAL(2), YTT(2), BERG(1)  
-→ To noder med grad 1: SOLV og BERG.
+To noder med grad 1: SOLV og BERG.
 
 **Graf (ii):**  
 
-- Samme to faste broer  
-- Ny bro mellom BERG og SOLV  
-- Veien YTT–STORHAVN fjernet (men denne fantes ikke i (i), så ingen endring her)  
+- Ny bro mellom BERG og SOLV
 
 Det vil si: (ii) = (i) + kant BERG–SOLV.  
 
@@ -217,32 +167,29 @@ BERG: 1 → 2
 Resten uendret.  
 
 Gradfølge (ii): LIL(2), STOR(2), SKIP(2), SOLV(2), ODD(2), DAL(2), YTT(2), BERG(2)  
-→ Alle noder har grad 2.
+Alle noder har grad 2.
 
-**Sammenligning:**  
+i og ii har ulike gradsekvenser og er derfor ikke isomorfe
 
-- (i) har to noder med grad 1  
-- (ii) har ingen noder med grad 1  
+## Oppgave 3 Kombinatorikk
 
-Ulike gradsekvenser → **ikke isomorfe**.
-
----
-
-**Svar (b):**  
-Nei, grafene er ikke isomorfe fordi gradsekvensene er forskjellige.
-
-# Oppgave 3 Kombinatorikk
-
-## Oppgave a
+### Oppgave a
 
 bokstaver + tall = 26 + 10 = 36
-10 * 26 * (6 * 36) = 56160
-## Oppgave b
-#### a) 
+Svaret blir: 10 &times; 26 &times; (pow(36, 6))
+
+### Oppgave b
+
+#### a)
+
 hver n har n mulige verdier
-n¨n
+pow(n, 2)
+
 #### b)
+
 Blir en permutasjon av mengen av n elementer, altså
 n!
+
 #### c)
+
 n opphøyd i ceil(m/2)
