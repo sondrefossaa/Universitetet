@@ -129,13 +129,13 @@
 - **Formel:**
     ¬∃x (¬Student(x) ∧ ∀y (Gretten(y) → Liker(x, y)))
 
-## Svar på oppgave (a) og (b)
+## 2 Grafer
 
-### (a) Plassering av tredje bro
+### a
 
 **Situasjonen:**  
 Vi har 8 tettsteder: Lillegrend (LIL) på Lilleøy, og Storøyhavn (STOR), Skipperhavn (SKIP), Solvik (SOLV) på Storøy. På fastlandet: Oddeneset (ODD), Dal (DAL), Yttervika (YTT), Berg (BERG).  
-To broer er allerede vedtatt:  
+To broer er allerede på plass:  
 
 - LIL–ODD  
 - STOR–LIL  
@@ -188,7 +188,7 @@ Nei – Hamilton-syklus er umulig (pga. SOLVs grad 1). Euler-krets er umulig (ka
 
 ---
 
-### (b) Isomorfi mellom to grafer
+### b
 
 **Graf (i):**  
 
@@ -230,3 +230,19 @@ Ulike gradsekvenser → **ikke isomorfe**.
 
 **Svar (b):**  
 Nei, grafene er ikke isomorfe fordi gradsekvensene er forskjellige.
+
+# Oppgave 3 Kombinatorikk
+
+## Oppgave a
+
+bokstaver + tall = 26 + 10 = 36
+10 * 26 * (6 * 36) = 56160
+## Oppgave b
+#### a) 
+hver n har n mulige verdier
+n¨n
+#### b)
+Blir en permutasjon av mengen av n elementer, altså
+n!
+#### c)
+n opphøyd i ceil(m/2)
