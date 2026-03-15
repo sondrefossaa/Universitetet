@@ -51,7 +51,7 @@ MORSE = {
 }
 
 # GPIO-pinne (bruk BCM-nummerering)
-LED_PIN = 18  # Endre denne til din tilkobling
+LED_PIN = 14  # Endre denne til din tilkobling
 
 
 class MorseBlinker:
