@@ -1,9 +1,9 @@
 from sys import stdin
 from collections import deque
 
-# Run all bsf simulatious with same backward queue or cache the queue
 input = stdin.readline
 goal = "111110111100 110000100000"
+
 max_depth = 10
 
 
@@ -31,7 +31,6 @@ def precompute_knight_moves():
 
 
 knight_moves = precompute_knight_moves()
-
 n = int(input())
 
 
@@ -40,60 +39,74 @@ class BidirectionalSearch:
         self.depth = 0
         self.fw = deque([start_state])
         self.bw = deque([goal_state])
-        self.fw_visited = set()
-        self.bw_visited = set()
-        self.fw_move = 1
-        self.bw_move = 0
+        self.fw_visited = {start_state: 0}
+        self.bw_visited = {goal_state: 0}
 
     def get_moves(self, state):
         moves = []
         empty_idx = state.find(" ")
 
         for i in range(25):
-            if state[i] != " ":
-                if empty_idx in knight_moves[i]:
-                    temp_state = list(state)
-                    temp_knight = temp_state[i]
-                    temp_state[i] = " "
-                    temp_state[empty_idx] = temp_knight
-                    moves.append("".join(temp_state))
+            if state[i] != " " and empty_idx in knight_moves[i]:
+                temp_state = list(state)
+                temp_state[i], temp_state[empty_idx] = " ", temp_state[i]
+                moves.append("".join(temp_state))
         return moves
 
     def bsf(self, direction):
-        if direction == "foreward":
-            current_state = self.fw.popleft()
-            for move in self.get_moves(current_state):
-                if move not in self.fw_visited:
-                    self.fw_visited.add(move)
-                    self.fw.append(move)
+        if direction == "forward":
+            level_size = len(self.fw)
+            for _ in range(level_size):
+                current_state = self.fw.popleft()
+                for move in self.get_moves(current_state):
+                    if move in self.bw_visited:
+                        return (
+                            self.fw_visited[current_state] + 1 + self.bw_visited[move]
+                        )
+                    if move not in self.fw_visited:
+                        self.fw_visited[move] = self.fw_visited[current_state] + 1
+                        self.fw.append(move)
         elif direction == "backward":
-            current_state = self.bw.popleft()
-            for move in self.get_moves(current_state):
-                if move not in self.fw_visited:
-                    self.bw_visited.add(move)
-                    self.bw.append(move)
-
-    def is_intersecting(self):
-        return set(self.fw).intersection(set(self.bw))
+            level_size = len(self.bw)
+            for _ in range(level_size):
+                current_state = self.bw.popleft()
+                for move in self.get_moves(current_state):
+                    if move in self.fw_visited:
+                        return (
+                            self.fw_visited[move] + 1 + self.bw_visited[current_state]
+                        )
+                    if move not in self.bw_visited:
+                        self.bw_visited[move] = self.bw_visited[current_state] + 1
+                        self.bw.append(move)
+        return None
 
     def bd_search(self):
+        # Check if goal and start state is the same
+        if self.fw_visited.keys() & self.bw_visited.keys():
+            return "Solvable in 0 move(s)."
         while self.fw and self.bw and self.depth < max_depth:
             self.depth += 1
-            self.bsf(direction="foreward")
-            self.bsf(direction="backward")
 
-            if self.is_intersecting():
-                return self.depth
-                break
+            result = self.bsf("forward")
+            if result is not None and result <= max_depth:
+                return f"Solvable in {result} move(s)."
+
+            result = self.bsf("backward")
+            if result is not None and result <= max_depth:
+                return f"Solvable in {result} move(s)."
+
         return "Unsolvable in less than 11 move(s)."
 
 
 for test_case in range(n):
-    # Read all 5 lines and join them into a single string
-    board_1d = "".join(input().strip() for _ in range(5))
+    # Problem with removremoving traveling space charactering traveling space character
+    board_lines = []
+    for _ in range(5):
+        line = input().rstrip("\n")
+        board_lines.append(line)
+
+    board_1d = "".join(board_lines)
+
     bd = BidirectionalSearch(board_1d, goal)
     print(bd.bd_search())
 
-# print(list(board_1d))
-# print(board_1d)
-# print(knight_moves)
