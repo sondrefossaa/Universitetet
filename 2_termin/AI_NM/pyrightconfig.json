@@ -1,0 +1,6 @@
+{
+  "venvPath": ".",
+  "venv": "ai_env",
+  "pythonVersion": "3.14",
+  "typeCheckingMode": "basic"
+}

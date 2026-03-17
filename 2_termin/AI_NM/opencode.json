@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "grocery-bot": {
+      "type": "remote",
+      "url": "https://mcp-docs.ainm.no/mcp",
+      "enabled": true
+    }
+  }
+}
