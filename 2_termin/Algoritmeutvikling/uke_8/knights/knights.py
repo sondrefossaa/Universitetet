@@ -109,4 +109,3 @@ for test_case in range(n):
 
     bd = BidirectionalSearch(board_1d, goal)
     print(bd.bd_search())
-
