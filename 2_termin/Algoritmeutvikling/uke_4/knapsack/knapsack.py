@@ -13,11 +13,12 @@ def solve(c, n, items):
             if new_value > dp[cap]:
                 dp[cap] = new_value
                 keep[i][cap] = 1
-    print(keep)
-    print(dp)
+
     chosen = []
+    # remaining_cap = c
     max_val = max(dp)
     remaining_cap = dp.index(max_val)
+
     for i in range(n - 1, -1, -1):
         if remaining_cap <= 0:
             break
