@@ -1,25 +1,11 @@
-# Graham scan
 from sys import stdin
 
 input = stdin.readline
 
-EPS = 1e-10
-
-
-def shoelace(hull):
-    """Calculate area of convex hull using shoelace formula"""
-    if len(hull) < 3:
-        return 0.0
-
-    area = 0
-    n = len(hull)
-
-    for i in range(n):
-        x1, y1 = hull[i]
-        x2, y2 = hull[(i + 1) % n]  # wrap to first point
-        area += x1 * y2 - x2 * y1
-
-    return abs(area) / 2.0
+L = int(input())
+large = [tuple(map(int, input().split())) for _ in range(L)]
+S = int(input())
+small = [tuple(map(int, input().split())) for _ in range(S)]
 
 
 def cross(a, b, c):
@@ -31,21 +17,24 @@ def convex_hull(points):
     points = sorted(set(points))
     S, hull = [], []  # S is a stack of points
     for p in points:
-        while len(S) >= 2 and cross(S[-2], S[-1], p) <= EPS:
+        while len(S) >= 2 and cross(S[-2], S[-1], p) <= 0:
             S.pop()
         S.append(p)
     hull += S
     S = []
     for p in reversed(points):
-        while len(S) >= 2 and cross(S[-2], S[-1], p) <= EPS:
+        while len(S) >= 2 and cross(S[-2], S[-1], p) <= 0:
             S.pop()
         S.append(p)
     hull += S[1:-1]  # ignore endpoints
     return hull
 
 
+hull = convex_hull(large)
+
+
 # Bin search to determine if point in polygon
-def inside(p, hull):
+def point_in_convex_polygon(p):
     n = len(hull)
     lo, hi = 1, n - 1
     if cross(hull[0], hull[1], p) < 0:
@@ -63,20 +52,4 @@ def inside(p, hull):
     return cross(hull[lo], hull[(lo + 1) % n], p) >= 0
 
 
-p, a = map(int, input().split())
-
-pines = [tuple(map(float, input().split())) for _ in range(p)]
-aspens = [tuple(map(float, input().split())) for _ in range(a)]
-
-
-p_hull = convex_hull(pines)
-a_hull = convex_hull(aspens)
-all = []
-for p in pines:
-    if inside(p, a_hull):
-        all.append(p)
-for p in aspens:
-    if inside(p, p_hull):
-        all.append(p)
-all_hull = convex_hull(all)
-print(shoelace(all_hull))
+print(sum(point_in_convex_polygon(p) for p in small))
