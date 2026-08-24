@@ -1,0 +1,26 @@
+calculate size of sort fuction that sorts lexographically
+
+get_value()
+if sorted(n1, n2) == n1, print YES, else NO
+
+check if sorted (s1, s1) == sorted(s1, s2, lamda x: get_value(x))
+because sorted sorts lexographically
+
+[s1, s2].sort() == [s1, s2].sort(key=lamda x: get_value(x))
+
+get_value(c):
+  if c.isdigit():
+    return int(c)
+  else if c.isupper():
+    return ord(c) -29
+  else:
+    return ord('c')-87
+
+def get_sum(x):
+  n = len(x)
+  sum = 0
+  for i in range(n):
+    sum += get_value(x[i]) * pow(62, i)
+
+
+# go from left to right on both  

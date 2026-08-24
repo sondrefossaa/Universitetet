@@ -299,10 +299,6 @@ H = 0.9 * 15.997 + 0.1 * 21.662
 
 **Svar:** ca. 16.56 bits i gjennomsnitt
 
-Ekstra:
-- en sekvens med 😂 gir ca. 16.00 bits
-- en sekvens uten 😂 gir ca. 21.66 bits
-
 ---
 
 ## j) Kort intuitiv forklaring på forskjellen mellom h) og i)
@@ -312,27 +308,3 @@ I h) antok vi at alle sekvenser av 4 emojier var like sannsynlige. Da er usikker
 I i) vet vi mer på forhånd: meldingen kommer fra en millennial, og millennials bruker ofte 😂. Da blir noen sekvenser mer sannsynlige enn andre. Når noe er mer forutsigbart, gir det mindre ny informasjon.
 
 Derfor er svaret i i) lavere enn i h).
-
----
-
-# Korte svar
-
-a) 10172500
-
-b) 390625
-
-c) 3329282
-
-d) 6375600
-
-e) 1 / 12650 ≈ 0.0000791
-
-f) 1 / 575 ≈ 0.001739
-
-g) 2 / 3 ≈ 0.667
-
-h) ca. 18.58 bits
-
-i) ca. 16.56 bits i gjennomsnitt
-
-j) Mer forkunnskap gir mindre usikkerhet, og dermed mindre informasjon.
